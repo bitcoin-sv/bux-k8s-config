@@ -1,0 +1,12 @@
+version: 0.1.0
+addons:
+  - name: community
+  - name: dns
+  - name: dashboard
+
+
+# These arguments will be set by the 'dns' addon. We set them manually to avoid
+# unnecessary Kubernetes restarts while the cluster is bootstrapping.
+extraKubeletArgs:
+  --cluster-dns: 10.152.183.10
+  --cluster-domain: cluster.local
