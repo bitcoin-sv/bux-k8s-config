@@ -3,6 +3,9 @@ addons:
   - name: community
   - name: dns
   - name: dashboard
+  - name: helm
+  - name: helm3
+  - name: argocd
 
 
 # These arguments will be set by the 'dns' addon. We set them manually to avoid
