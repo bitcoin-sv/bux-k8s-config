@@ -7,8 +7,15 @@ on:
         type: string
 
 jobs:
-  build:
+  build-docker:
     uses: ./.github/workflows/build-bux.yml
+    secrets: inherit
+    with:
+      version: ${{ inputs.revision }}
+  update-version-pr:
+    needs: build-docker
+    if: success()
+    uses: ./.github/workflows/update-bux-pr.yml
     secrets: inherit
     with:
       version: ${{ inputs.revision }}

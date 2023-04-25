@@ -1,7 +1,7 @@
 name: '[Schedule] Prepare newest version of bux-server'
 on:
   schedule:
-    - cron: '30 6 * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -17,6 +17,13 @@ jobs:
     uses: ./.github/workflows/build-bux.yml
     needs: check-newest-version
     if: success() && needs.check-newest-version.outputs.dockerNotFound == 'true'
+    secrets: inherit
+    with:
+      version: ${{ needs.check-newest-version.outputs.buxversion }}
+  update-version-pr:
+    needs: [ check-newest-version, build-docker ]
+    if: success()
+    uses: ./.github/workflows/update-bux-pr.yml
     secrets: inherit
     with:
       version: ${{ needs.check-newest-version.outputs.buxversion }}

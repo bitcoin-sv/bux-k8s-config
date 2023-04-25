@@ -1,0 +1,34 @@
+name: '[Reuse] bux-server-update-pr'
+permissions:
+  contents: write
+  pull-requests: write
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Update version
+        run: echo "${{inputs.version}}" > bux-server.version
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "feat: update bux-server to ${{inputs.version}}"
+          committer: GitHub <noreply@github.com>
+          branch: update-bux-server
+          delete-branch: true
+          title: "feat: update bux-server to ${{inputs.version}}"
+          body: |
+            This is PR automatically created because of release of bux-server ${{inputs.version}}
+          labels: |
+            bux-server
+            automated pr
+          draft: false

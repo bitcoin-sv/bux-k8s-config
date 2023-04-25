@@ -1,4 +1,4 @@
-name: "[Reuse] build docker image for bux-server"
+name: "[Reuse] build-bux-server-docker"
 on:
   workflow_call:
     inputs:
@@ -35,5 +35,4 @@ jobs:
         with:
           push: true
           tags: 4chainstudio/bux-server:${{inputs.version}}
-          platform: linux/amd64
           context: './bux-server'
