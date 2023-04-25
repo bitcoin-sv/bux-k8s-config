@@ -1,4 +1,4 @@
-name: Check if there is docker image for newest tag
+name: "[Reuse] Check if there is docker image for newest tag"
 on:
   workflow_call:
     # Map the workflow outputs to job outputs

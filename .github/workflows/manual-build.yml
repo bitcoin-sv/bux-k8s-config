@@ -9,6 +9,6 @@ on:
 jobs:
   build:
     uses: ./.github/workflows/build-bux.yml
+    secrets: inherit
     with:
       version: ${{ inputs.revision }}
-      secrets: inherit

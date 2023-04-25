@@ -1,4 +1,4 @@
-name: Check if there is docker image for newest tag
+name: "[Reuse] build docker image for bux-server"
 on:
   workflow_call:
     inputs:
@@ -18,7 +18,7 @@ jobs:
         name: checkout bux-server
         with:
           repository: BuxOrg/bux-server
-          ref:
+          ref: ${{inputs.version}}
           fetch-depth: 1
           path: 'bux-server'
       - name: Set up QEMU
