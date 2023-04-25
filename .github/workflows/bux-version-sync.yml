@@ -1,0 +1,16 @@
+name: Prepare newest version of bux-server
+on:
+  schedule:
+    - cron: '30 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  check-newest-version:
+    uses: ./.github/workflows/check-bux-version.yml
+  build-docker:
+    uses: ./.github/workflows/build-bux.yml
+    needs: check-newest-version
+    if: ${{needs.check-newest-version.outputs.dockerNotFound}} == 'true'
+    secrets: inherit
+    with:
+      version: ${{ needs.check-newest-version.outputs.buxversion }}
