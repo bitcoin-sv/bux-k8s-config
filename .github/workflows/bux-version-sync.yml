@@ -1,4 +1,4 @@
-name: Prepare newest version of bux-server
+name: '[Schedule] Prepare newest version of bux-server'
 on:
   schedule:
     - cron: '30 6 * * *'
@@ -7,10 +7,16 @@ on:
 jobs:
   check-newest-version:
     uses: ./.github/workflows/check-bux-version.yml
+  print-output:
+    runs-on: ubuntu-latest
+    needs: check-newest-version
+    steps:
+      - run: echo "BUX VERSION ${{ needs.check-newest-version.outputs.buxversion }}"
+      - run: echo "DOCKER NOT FOUND ${{ needs.check-newest-version.outputs.dockerNotFound }}"
   build-docker:
     uses: ./.github/workflows/build-bux.yml
     needs: check-newest-version
-    if: ${{needs.check-newest-version.outputs.dockerNotFound}} == 'true'
+    if: success() && needs.check-newest-version.outputs.dockerNotFound == 'true'
     secrets: inherit
     with:
       version: ${{ needs.check-newest-version.outputs.buxversion }}
