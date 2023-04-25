@@ -1,0 +1,14 @@
+name: Run bux-server docker image build manually
+on:
+  workflow_dispatch:
+    inputs:
+      revision:
+        required: true
+        type: string
+
+jobs:
+  build:
+    uses: ./.github/workflows/build-bux.yml
+    with:
+      version: ${{ inputs.revision }}
+      secrets: inherit

@@ -1,0 +1,42 @@
+name: Check if there is docker image for newest tag
+on:
+  workflow_call:
+    # Map the workflow outputs to job outputs
+    outputs:
+      buxversion:
+        description: "Newest version of bux-server"
+        value: ${{ jobs.check-docker-tag.outputs.output1 }}
+      dockerNotFound:
+        description: "Does docker image with version exist (1 -> not found, 0 -> found)"
+        value: ${{ jobs.check-docker-tag.outputs.output2 }}
+jobs:
+  check-docker-tag:
+    runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.bux-version.outputs.buxServerVersion }}
+      output2: ${{ steps.docker-image.outputs.dockerNotFound }}
+    steps:
+      - name: load newest version number of bux-server
+        id: bux-version
+        run: |
+          git ls-remote --exit-code -t --refs --sort='version:refname' git@github.com:BuxOrg/bux-server.git  '*.*.*' \                                                                                       1 ↵
+          | tail --lines=1 | awk -F/ '{ print $3 }' | xargs -I {} echo "buxServerVersion={}" >> $GITHUB_OUTPUT
+      - name: check if docker for version exists
+        id: docker-image
+        run: docker manifest inspect 4chainstudio/bux-server:v0.4.0 > /dev/null 2>&1; echo "dockerNotFound=$?" >> $GITHUB_OUTPUT
+
+      - uses: actions/checkout@v3
+        name: checkout k8s-config
+        with:
+          path: 'k8s-config'
+      - uses: actions/checkout@v3
+        name: checkout bux-server
+        with:
+          path: 'bux-server'
+
+
+      - uses: micnncim/action-label-syncer@v1.3.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          manifest: .github/labels.yml

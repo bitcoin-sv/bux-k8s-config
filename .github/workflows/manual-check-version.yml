@@ -1,0 +1,13 @@
+name: Check if newest bux-server exists
+on:
+  workflow_dispatch:
+
+jobs:
+  check-version:
+    uses: ./.github/workflows/check-bux-version.yml
+  print-result:
+    runs-on: ubuntu-latest
+    needs: check-version
+    steps:
+      - run: echo "BUX VERSION ${{ needs.check-version.outputs.buxversion }}"
+      - run: echo "DOCKER NOT FOUND ${{ needs.check-version.outputs.dockerNotFound }}"
