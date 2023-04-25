@@ -7,7 +7,7 @@ on:
         description: "Newest version of bux-server"
         value: ${{ jobs.check-docker-tag.outputs.output1 }}
       dockerNotFound:
-        description: "Does docker image with version exist (1 -> not found, 0 -> found)"
+        description: "Is docker image with version not found"
         value: ${{ jobs.check-docker-tag.outputs.output2 }}
 jobs:
   check-docker-tag:
@@ -22,4 +22,4 @@ jobs:
           git ls-remote --exit-code -t --refs --sort='version:refname' https://github.com/BuxOrg/bux-server.git  '*.*.*' | tail --lines=1 | awk -F/ '{ print $3 }' | xargs -I {} echo "buxServerVersion={}" >> $GITHUB_OUTPUT
       - name: check if docker for version exists
         id: docker-image
-        run: docker manifest inspect 4chainstudio/bux-server:v0.4.0 > /dev/null 2>&1; echo "dockerNotFound=$?" >> $GITHUB_OUTPUT
+        run: (docker manifest inspect 4chainstudio/bux-server:${{ steps.bux-version.outputs.buxServerVersion }} > /dev/null 2>&1 && echo "dockerNotFound=false" || echo "dockerNotFound=true") >>  $GITHUB_OUTPUT
