@@ -23,6 +23,7 @@ jobs:
         with:
           commit-message: "feat: update bux-server to ${{inputs.version}}"
           committer: GitHub <noreply@github.com>
+          author: 4ChainBot <noreply@4chain.studio>
           branch: update-bux-server
           delete-branch: true
           title: "feat: update bux-server to ${{inputs.version}}"

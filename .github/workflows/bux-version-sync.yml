@@ -1,7 +1,7 @@
 name: '[Schedule] Prepare newest version of bux-server'
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '7/15 * * * *'
   workflow_dispatch:
 
 jobs:

@@ -43,6 +43,29 @@ Therefore, to disable addon you must:
 sudo microk8s disable <<ADDON_NAME>>
 ```
 
+### Docker for bux server
+
+---------------------------------------------------------------------------------------
+
+#### sync to the newest version
+
+Because (yet) there is no official docker image for bux-server, 
+we prepared a scheduled build (GH Action) defined in [bux-version-sync.yml](./.github/workflows/bux-version-sync.yml)
+This action is triggered by GH scheduler, but also there is a possibility to trigger it manually.
+
+What is it doing:
+- check what is the newest tag for bux-server (reusing workflow [check-bux-version.yml](./.github/workflows/check-bux-version.yml))
+- verify if there is docker image with coresponding tag in our dockerhub repository (reusing workflow [check-bux-version.yml](./.github/workflows/check-bux-version.yml))
+- if there is no coresponding version of docker image then it builds it and push (reusing workflow [build-bux.yml](./.github/workflows/build-bux.yml))
+- when the new image was build and pushed then it updates bux-server version in this repository and create a PR for that change (reusing workflow [update-bux-pr.yml](./.github/workflows/update-bux-pr.yml))
+
+#### manual actions
+
+Several manual actions was prepared to make debugging and developing more convenience:
+- [Run bux-server docker image build manually](https://github.com/gignative-solutions/k8s-config/actions/workflows/manual-build.yml) - this allows to trigger build of bux server image from given git revision and automatically will prepare a PR with changing the version to that newly built
+- [[Schedule] Prepare newest version of bux-server](https://github.com/gignative-solutions/k8s-config/actions/workflows/bux-version-sync.yml) - can be manually triggered and how it's working is described in previous section
+- [Check if newest bux-server exists](https://github.com/gignative-solutions/k8s-config/actions/workflows/manual-check-version.yml) - can be used to check the results of checking the newest version number of bux-server and if corresponding image exists
+
 ## Useful links
 
 - [Microk8s Addons](https://microk8s.io/docs/addons)
