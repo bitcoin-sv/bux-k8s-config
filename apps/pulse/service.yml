@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pulse
+  labels:
+    app: pulse
+spec:
+  selector:
+    app.kubernetes.io/name: pulse
+  type: ClusterIP
+  ports:
+    - name: web
+      port: 80
+      targetPort: web
+

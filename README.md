@@ -35,10 +35,14 @@ Or you want to install some new [Microk8s Addons](https://microk8s.io/docs/addon
 ```
 #### Remove Microk8s addon
 
-Unfortunately it seems that removing addon from [microk8s-config.yaml](microk8s-config.yaml) doesn't disable addon.
-Therefore, to disable addon you must:
-1. SSH to the vps
-2. Run
+In [microk8s-config.yaml](microk8s-config.yaml) you can disable an addon by explicitly marking it as disabled
+Example
+```yaml
+addons:
+  - name: registry
+    disable: true
+```
+
 ```bash
 sudo microk8s disable <<ADDON_NAME>>
 ```

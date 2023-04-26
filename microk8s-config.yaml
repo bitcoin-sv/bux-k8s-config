@@ -6,7 +6,9 @@ addons:
   - name: helm
   - name: helm3
   - name: argocd
-
+  - name: traefik
+  - name: metallb
+    args: [185.194.216.93/32]
 
 # These arguments will be set by the 'dns' addon. We set them manually to avoid
 # unnecessary Kubernetes restarts while the cluster is bootstrapping.
