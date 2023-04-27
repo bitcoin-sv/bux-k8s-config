@@ -4,7 +4,6 @@ metadata:
   name: lets-encrypt
 spec:
   acme:
-    email: dev@4chain.studio
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       # Secret resource that will be used to store the account's private key.
