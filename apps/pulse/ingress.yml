@@ -6,6 +6,7 @@ metadata:
     app: pulse
   annotations:
     cert-manager.io/cluster-issuer: lets-encrypt
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
   tls:
     - hosts:
