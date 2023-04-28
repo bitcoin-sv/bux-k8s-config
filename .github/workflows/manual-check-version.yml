@@ -1,4 +1,4 @@
-name: Check if newest bux-server exists
+name: '[Manual] Check the newest bux-server version'
 on:
   workflow_dispatch:
 

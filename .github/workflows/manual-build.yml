@@ -1,4 +1,4 @@
-name: Run bux-server docker image build manually
+name: '[Manual] Build bux-server docker'
 on:
   workflow_dispatch:
     inputs:

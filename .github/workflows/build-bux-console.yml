@@ -1,26 +1,27 @@
-name: "[Reuse] build-bux-server-docker"
+name: '[Manual] Build bux-console'
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
+      revision:
+        required: true
+        type: string
+        default: master
       version:
+        description: Docker image version tag that will be created
         required: true
         type: string
 
 jobs:
-  build-bux:
+  build-bux-console:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        name: checkout k8s-config
+        name: checkout bux-console
         with:
-          path: 'k8s-config'
-      - uses: actions/checkout@v3
-        name: checkout bux-server
-        with:
-          repository: BuxOrg/bux-server
-          ref: ${{inputs.version}}
+          repository: BuxOrg/bux-console
+          ref: ${{inputs.revision}}
           fetch-depth: 1
-          path: 'bux-server'
+          path: 'bux-console'
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
@@ -34,5 +35,5 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: 4chainstudio/bux-server:${{inputs.version}}
-          context: './bux-server'
+          tags: 4chainstudio/bux-console:${{inputs.version}}
+          context: './bux-console'
