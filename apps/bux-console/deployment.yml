@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: bux-console
+  name: bux-console
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bux-console
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: bux-console
+        app.kubernetes.io/name: bux-console
+    spec:
+      containers:
+        - name: bux-console
+          image: 4chainstudio/bux-console:v0.1.2-RC1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: web
+              protocol: TCP
