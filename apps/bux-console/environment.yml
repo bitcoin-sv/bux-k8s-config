@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bux-console-env
+  labels:
+    app: bux-console
+data:
+  ROOT_URL: 'https://bux-console.4chain.space/'
+  METEOR_SETTINGS: '{}'

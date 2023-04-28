@@ -24,6 +24,9 @@ spec:
         - name: bux-console
           image: 4chainstudio/bux-console:v0.1.2-RC1
           imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: bux-console-env
           ports:
             - containerPort: 8080
               name: web
