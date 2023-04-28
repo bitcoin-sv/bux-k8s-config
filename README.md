@@ -222,6 +222,43 @@ spec:
 
 To automatically generate SSL/TLS certificate for our domain we need above configuration for ingress.
 
+
+### Automatic issuing SSL/TLS certificate
+
+---------------------------------------------------------------------------------------
+
+To automatically issue SSL/TLS certificates we use [cert-manager addon](https://microk8s.io/docs/addon-cert-manager).
+
+After installing it, we need to prepare configuration of a ClusterIssuer which is plased in a file [cluster-issuer.yml](./devops/cert-manager/cluster-issuer.yml) .
+
+```yaml
+metadata:
+  name: lets-encrypt
+```
+
+It's worth pointing that we named the cluster issuer as a `lets-encrypt`.
+
+We're using that later in all Ingress configurations that use an SSL as a value of an annotation `cert-manager.io/cluster-issuer`.
+
+To use cert manager in a Ingress configuration we need the following entries:
+
+```yaml
+metadata:
+  #...
+  annotations:
+    cert-manager.io/cluster-issuer: lets-encrypt      # bind to cert manager configuration for issuing certs
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+
+
+spec:
+  tls:
+    - hosts:
+        - example.4chain.space # setup domain name for which we want to have secured communication
+      secretName: example-tls  # provide a name for a secret in which certificate will be stored for that domain
+```
+
+ℹ️ You can find example of Ingress with SSL and domain in [pulse/ingress.yml](./apps/pulse/ingress.yml)
+
 ## Useful links
 
 - [Microk8s Addons](https://microk8s.io/docs/addons)
