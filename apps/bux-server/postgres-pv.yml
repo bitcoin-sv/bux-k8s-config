@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-pv
+  labels:
+    app: postgres
+spec:
+  capacity:
+    storage: 2Gi
+  storageClassName: microk8s-hostpath
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/var/data"
+    type: DirectoryOrCreate
