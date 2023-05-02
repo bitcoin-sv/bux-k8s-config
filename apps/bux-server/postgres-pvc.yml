@@ -8,7 +8,7 @@ spec:
   volumeName: postgres-pv
   accessModes:
     - ReadWriteOnce
-  storageClassName: microk8s-hostpath
+  storageClassName: mayastor
   resources:
     requests:
       storage: 2Gi
