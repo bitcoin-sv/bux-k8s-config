@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: postgres-configuration
   labels:
-    app: postgres
+    app: bux
 data:
   POSTGRES_DB: bux
   POSTGRES_USER: bux

@@ -9,7 +9,7 @@ addons:
   - name: traefik
   - name: cert-manager
   - name: metallb
-  - name: mayastor
+  - name: openebs
     args: [185.194.216.93/32]
 
 # These arguments will be set by the 'dns' addon. We set them manually to avoid

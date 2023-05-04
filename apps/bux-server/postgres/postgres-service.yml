@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: postgres-service
   labels:
-    app: postgres
+    app: bux
 spec:
   ports:
   - port: 5432
     name: postgres
   type: ClusterIP
   selector:
-    app: postgres
+    app: bux
