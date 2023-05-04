@@ -259,6 +259,117 @@ spec:
 
 ℹ️ You can find example of Ingress with SSL and domain in [pulse/ingress.yml](./apps/pulse/ingress.yml)
 
+### Storage
+
+---------------------------------------------------------------------------------------
+
+Currently we are using **openebs** addon as PersistentVolume type.
+- [openebs addon](https://microk8s.io/docs/addon-openebs) 
+
+Steps required for using volume with PersistentVolume:
+* PersistentVolume 
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv
+spec:
+  capacity:
+    storage: 20Gi
+  storageClassName: openebs-hostpath
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/var/data"
+    type: DirectoryOrCreate
+```
+Here we speficied few things:
+- capacity - 20GB,
+and another important thing **openebs-hostpath** -> recommended way to use openebs with single node.
+
+For real production environments with multiple nodes recommended storageClassName is **openebs-jiva-csi-default**.
+
+Also we need to specify PersistentVolumeClaim type.
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc
+  labels:
+    app: bux
+spec:
+  volumeName: pv
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: openebs-hostpath
+  resources:
+    requests:
+      storage: 10Gi
+
+```
+The most important option is to set storage to have less or equal storage capacity specified in PersistentVolume.
+
+Then, we use defined claim&volume in deployment file this way:
+```yaml
+
+    spec:
+      containers:
+...
+          volumeMounts:
+            - name: pv
+              mountPath: /var/postgresql/data
+      volumes:
+        - name: pv
+          persistentVolumeClaim:
+            claimName: pvc
+```
+
+### Postgres (config&problems)
+
+---------------------------------------------------------------------------------------
+
+Here we created a new thing called ConfigMap to store our environments:
+
+```yaml
+spec:
+      containers:
+        - name: postgres
+          image: postgres:15.2-alpine3.17
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+              name: pgdb
+          envFrom:
+            - configMapRef:
+                name: postgres-configuration
+```
+
+ConfigMap usage is pretty strightforward - we need to define envFrom section as mentioned above.
+Then, our responsibility is to create environment file with ConfigMap definition.
+Our env file as an example:
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-configuration
+  labels:
+    app: bux
+data:
+  POSTGRES_DB: bux
+  POSTGRES_USER: bux
+  POSTGRES_PASSWORD: postgres
+
+```
+In the data section we can easily define all key-value pairs to be exposed as environment variables inside single pod.
+
+**Something really important about postgres configuration**
+**The bus problem**
+> When configuring postgres we faced an issue with "bus". Pod was restarted multiple times, but without any success.
+> Details provided here [hugepages_problem](https://github.com/kubernetes/kubernetes/issues/71233)
+> As a result it was needed to remove hugepages declaration from sysctl.
+> We needed to switch from Mayastor to OpenEBS as Mayastor needs hugepages for itself to work properly.
+
 ## Useful links
 
 - [Microk8s Addons](https://microk8s.io/docs/addons)
