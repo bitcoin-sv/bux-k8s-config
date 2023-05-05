@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: bux-console
-          image: 4chainstudio/bux-console:v0.1.2-RC1
+          image: 4chainstudio/bux-console:v0.2.0-RC1
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
