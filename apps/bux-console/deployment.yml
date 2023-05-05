@@ -28,6 +28,6 @@ spec:
             - configMapRef:
                 name: bux-console-env
           ports:
-            - containerPort: 8080
+            - containerPort: 3000
               name: web
               protocol: TCP
