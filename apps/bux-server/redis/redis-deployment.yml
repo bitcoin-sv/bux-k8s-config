@@ -27,4 +27,4 @@ spec:
       volumes:
         - name: pv
           persistentVolumeClaim:
-            claimName: pvc
+            claimName: redis-pvc
