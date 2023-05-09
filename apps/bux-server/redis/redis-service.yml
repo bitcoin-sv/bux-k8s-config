@@ -4,10 +4,13 @@ metadata:
   name: redis-service
   labels:
     app: bux
+    instance: redis
 spec:
   ports:
   - port: 6379
+    targetPort: 6379
     name: redis
   type: ClusterIP
   selector:
     app: bux
+    instance: redis

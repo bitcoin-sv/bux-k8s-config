@@ -4,6 +4,7 @@ metadata:
   name: postgres-pvc
   labels:
     app: bux
+    instance: postgres
 spec:
   accessModes:
     - ReadWriteOnce

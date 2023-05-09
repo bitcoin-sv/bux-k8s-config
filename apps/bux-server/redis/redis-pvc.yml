@@ -4,6 +4,7 @@ metadata:
   name: redis-pvc
   labels:
     app: bux
+    instance: redis
 spec:
   accessModes:
     - ReadWriteOnce

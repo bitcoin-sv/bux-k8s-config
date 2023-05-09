@@ -4,10 +4,13 @@ metadata:
   name: postgres-service
   labels:
     app: bux
+    instance: postgres
 spec:
   ports:
   - port: 5432
+    targetPort: 5432
     name: postgres
   type: ClusterIP
   selector:
     app: bux
+    instance: postgres

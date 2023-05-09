@@ -4,15 +4,18 @@ metadata:
   name: redis
   labels:
     app: bux
+    instance: redis
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: bux
+      instance: redis
   template:
     metadata:
       labels:
         app: bux
+        instance: redis
     spec:
       containers:
         - name: redis
@@ -23,7 +26,7 @@ spec:
               name: redis
           volumeMounts:
             - name: pv
-              mountPath: /data
+              mountPath: /data/redis
       volumes:
         - name: pv
           persistentVolumeClaim:

@@ -4,6 +4,7 @@ metadata:
   name: postgres-configuration
   labels:
     app: bux
+    instance: postgres
 data:
   POSTGRES_DB: bux
   POSTGRES_USER: bux

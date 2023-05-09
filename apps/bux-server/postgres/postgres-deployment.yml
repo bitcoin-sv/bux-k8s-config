@@ -4,15 +4,18 @@ metadata:
   name: postgres
   labels:
     app: bux
+    instance: postgres
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: bux
+      instance: postgres
   template:
     metadata:
       labels:
         app: bux
+        instance: postgres
     spec:
       containers:
         - name: postgres
