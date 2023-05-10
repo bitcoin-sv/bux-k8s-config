@@ -13,10 +13,15 @@ sudo sudo microk8s.kubectl apply  -f ./devops/cert-manager/cluster-issuer.yml \
                                   -f ./apps/bux-console/deployment.yml \
                                   -f ./apps/bux-console/service.yml \
                                   -f ./apps/bux-console/ingress.yml \
-                                  -f ./apps/bux-server/postgres/postgres-environment.yml \
-                                  -f ./apps/bux-server/postgres/postgres-pvc.yml \
-                                  -f ./apps/bux-server/postgres/postgres-deployment.yml \
-                                  -f ./apps/bux-server/postgres/postgres-service.yml \
-                                  -f ./apps/bux-server/redis/redis-pvc.yml \
-                                  -f ./apps/bux-server/redis/redis-deployment.yml \
-                                  -f ./apps/bux-server/redis/redis-service.yml \
+                                  -f ./apps/bux-server/postgres/environment.yml \
+                                  -f ./apps/bux-server/postgres/pvc.yml \
+                                  -f ./apps/bux-server/postgres/deployment.yml \
+                                  -f ./apps/bux-server/postgres/service.yml \
+                                  -f ./apps/bux-server/redis/pvc.yml \
+                                  -f ./apps/bux-server/redis/deployment.yml \
+                                  -f ./apps/bux-server/redis/service.yml 
+sudo sudo microk8s.kubectl -n argocd apply -f ./devops/argo-cd/repository-connector-secret.yml \
+                                           -f ./apps/bux-console/argocd-def.yml \
+                                           -f ./apps/pulse/argocd-def.yml \
+                                           -f ./apps/bux-server/postgres/argocd-def.yml \
+                                           -f ./apps/bux-server/redis/argocd-def.yml \

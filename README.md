@@ -370,6 +370,116 @@ In the data section we can easily define all key-value pairs to be exposed as en
 > As a result it was needed to remove hugepages declaration from sysctl.
 > We needed to switch from Mayastor to OpenEBS as Mayastor needs hugepages for itself to work properly.
 
+### ArgoCD
+
+---------------------------------------------------------------------------------------
+We are using ArgoCD as continous delivery GitOps tool.
+ArgoCD is a declarative CD tool that uses Kubernetes manifests as its source of truth. 
+This means that ArgoCD is able to automatically reconcile the state of the desired configuration with the actual state of the deployed system, ensuring that the system is always in the desired state.
+
+**Installation guide**
+
+**Traefik**
+> We needed to pass additional argument to enable traefik addon:
+```bash
+sudo microk8s enable community
+sudo microk8s enable traefik --set="additionalArguments={--serverstransport.insecureskipverify=true}"
+sudo snap set microk8s config="$(cat microk8s-config.yaml)"
+```
+**Addons**
+> Then we enable argocd addon using microk8s-config.yaml
+```yaml
+addons:
+  ...
+  - name: argocd
+  ...
+```
+**Ingress Definition for ArgoCD**
+>> ArgoCD Ingress definition was created in devops/argo-cd/ingress.yml file. 
+Something quite important is that we can't change:
+```yaml
+      ...
+      secretName: argocd-secret
+      ...
+```
+is this secretName predefined in argocd configuration.
+
+**Usage**
+
+> Before your work get Admin password using this command (default login is just admin):
+
+```sudo microk8s kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" |base64 -d ```
+
+There are two ways of using ArgoCD - **declarative(recommended) & imperative(CLI and UI)**
+Our setup base on declarative approach.
+
+> To use ArgoCD CLI here is installation guide:
+> [ArgoCD CLI](https://argo-cd.readthedocs.io/en/stable/cli_installation/)
+
+Each of our application has it's own **argocd-def.yaml** file.
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bux-console
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:gignative-solutions/k8s-config.git
+    targetRevision: HEAD
+    path: apps/bux-console
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+```
+
+We define here few important things:
+* metadata -> name (must be unique),
+* source with repoURL (in this example configured with SSH),
+* revision which points to current HEAD (main) but we can configure it on tags etc.
+* and the **path** which points to specific application folder in our repository.
+
+> We set syncPolicy as automated which means that ArgoCD will look for changes and try to 
+> apply them on our applications.
+> The other way is to update each application manually.
+
+Additional settings and explanations for declarative approach:
+[ArgoCD Declarative Setup](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/)
+
+One of the most important things is repository access - as ArgoCD is a "pulling" tool it needs to have direct
+acces to our repository.
+
+**We are using repository deploy keys (SSH keys) with r/w access**
+
+> There are a lot of different options like basic https auth with login and password or tokens.
+
+We created yaml file which creates repository connection for ArgoCD. You need to specify valid URL & Private Key.
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: k8s-config-rw
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  url: ssh://git@github.com:gignative-solutions/k8s-config.git
+  sshPrivateKey: |
+    -----BEGIN OPENSSH PRIVATE KEY-----
+    ...
+    -----END OPENSSH PRIVATE KEY-----
+```
+
+Yaml setup for other authentication types:
+[ArgoCD Declarative Setup Repositories]("https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#repositories")
+
 ## Useful links
 
 - [Microk8s Addons](https://microk8s.io/docs/addons)
