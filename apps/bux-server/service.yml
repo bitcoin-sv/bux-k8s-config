@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bux-server
+  labels:
+    app: bux
+    instance: bux-server
+spec:
+  selector:
+    app.kubernetes.io/name: bux-server
+  type: ClusterIP
+  ports:
+    - name: web
+      port: 3003
+      targetPort: web

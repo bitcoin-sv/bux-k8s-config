@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bux-server-ingress
+  labels:
+    app: bux
+    instance: bux-server
+  annotations:
+    cert-manager.io/cluster-issuer: lets-encrypt
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  tls:
+    - hosts:
+        - bux.4chain.space
+      secretName: bux-server-tls
+  rules:
+    - host: bux.4chain.space
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: bux-server
+                port:
+                  name: web
