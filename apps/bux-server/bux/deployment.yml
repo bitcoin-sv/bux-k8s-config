@@ -31,7 +31,7 @@ spec:
             name: bux-server-env-configs
       containers:
         - name: bux-server
-          image: 4chainstudio/bux-server:$BUX_VERSION
+          image: 4chainstudio/bux-server:v0.5.0
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:

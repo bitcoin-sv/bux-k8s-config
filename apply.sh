@@ -3,14 +3,10 @@
 # Temporary solution for applying all k8s changes (should be replaced with argo cd)
 # For now add your file to the command
 
-# Getting the version of BUX that should be deployed
-# Will be used below
-export BUX_VERSION=$(cat bux-server.version);
-
 # Creation of configmap from all bux-env jsons we have
 # Without 'apply' configmap won't be reconfigured if any env json config is updated
 sudo microk8s kubectl create configmap bux-server-env-configs \
-    --from-file=apps/bux-server/bux-env \
+    --from-file=apps/bux-server/bux/env \
     -o yaml \
     --dry-run=client | sudo microk8s kubectl apply -f - ;
 
@@ -31,16 +27,14 @@ sudo sudo microk8s.kubectl apply  -f ./devops/cert-manager/cluster-issuer.yml \
                                   -f ./apps/bux-server/redis/pvc.yml \
                                   -f ./apps/bux-server/redis/deployment.yml \
                                   -f ./apps/bux-server/redis/service.yml \
-                                  -f ./apps/bux-server/environment.yml;
-
-# kubectl apply with specifying bux-version from env variable, which was read earlier 
-envsubst < ./apps/bux-server/deployment.yml | sudo microk8s kubectl apply -f -;
-
-sudo sudo microk8s.kubectl apply  -f ./apps/bux-server/service.yml \
-                                  -f ./apps/bux-server/ingress.yml;
+                                  -f ./apps/bux-server/bux/environment.yml \
+                                  -f ./apps/bux-server/bux/deployment.yml \
+                                  -f ./apps/bux-server/bux/service.yml \
+                                  -f ./apps/bux-server/bux/ingress.yml;
 
 sudo sudo microk8s.kubectl -n argocd apply -f ./devops/argo-cd/repository-connector-secret.yml \
                                            -f ./apps/bux-console/argocd-def.yml \
                                            -f ./apps/pulse/argocd-def.yml \
                                            -f ./apps/bux-server/postgres/argocd-def.yml \
                                            -f ./apps/bux-server/redis/argocd-def.yml \
+                                           -f ./apps/bux-server/bux/argocd-def.yml \
