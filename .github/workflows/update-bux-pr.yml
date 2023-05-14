@@ -16,7 +16,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Update version
-        run: echo "${{inputs.version}}" > bux-server.version
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq -i '.spec.template.spec.containers[0].image = "4chainstudio/bux-server:${{inputs.version}}"' apps/bux-server/bux/base/deployment.yml
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v5

@@ -53,8 +53,8 @@ spec:
                   name: postgres-configuration
                   key: POSTGRES_DB
           volumeMounts:
-          - name: config-volume
-            mountPath: /config/envs
+            - name: config-volume
+              mountPath: /config/envs
           ports:
             - containerPort: 3003
               name: web
