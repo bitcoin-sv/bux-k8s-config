@@ -1,0 +1,10 @@
+resources:
+- ../base
+configMapGenerator:
+- name: bux-server-env-configs
+  files:
+  - development.json
+- name: bux-server-env
+  behavior: replace
+  literals:
+  - BUX_ENVIRONMENT=development
