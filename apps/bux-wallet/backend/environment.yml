@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bux-wallet-backend-demo
+  labels:
+    app.kubernetes.io/name: bux-wallet-backend
+    app.kubernetes.io/instance: bux-wallet-backend-demo
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: bux-wallet
+    app.kubernetes.io/managed-by: kubectl
+data:
+  DB_HOST: 'postgres-bux-wallet-demo'
+  BUX_ADMIN_XPRIV: 'xprv9s21ZrQH143K3CbJXirfrtpLvhT3Vgusdo8coBritQ3rcS7Jy7sxWhatuxG5h2y1Cqj8FKmPp69536gmjYRpfga2MJdsGyBsnB12E19CESK'
+  BUX_SERVER_URL: 'http://bux-server'

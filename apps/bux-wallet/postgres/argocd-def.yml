@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: postgres-bux-wallet-demo
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:gignative-solutions/k8s-config.git
+    targetRevision: HEAD
+    path: apps/bux-wallet/postgres
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

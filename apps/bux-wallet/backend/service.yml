@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bux-wallet-backend-demo
+  labels:
+    app.kubernetes.io/name: bux-wallet-backend
+    app.kubernetes.io/instance: bux-wallet-backend-demo
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: bux-wallet
+    app.kubernetes.io/managed-by: kubectl
+spec:
+  selector:
+    app.kubernetes.io/instance: bux-wallet-backend-demo
+  type: ClusterIP
+  ports:
+    - name: web
+      port: 80
+      targetPort: web

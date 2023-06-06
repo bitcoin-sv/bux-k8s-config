@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-bux-wallet-demo
+  labels:
+    app.kubernetes.io/name: postgres
+    app.kubernetes.io/instance: postgres-bux-wallet-demo
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: bux-wallet
+    app.kubernetes.io/managed-by: kubectl
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: openebs-hostpath
+  resources:
+    requests:
+      storage: 1Gi

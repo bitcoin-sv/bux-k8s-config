@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-bux-wallet-demo
+  labels:
+    app.kubernetes.io/name: postgres
+    app.kubernetes.io/instance: postgres-bux-wallet-demo
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: bux-wallet
+    app.kubernetes.io/managed-by: kubectl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: postgres-bux-wallet-demo
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: postgres
+        app.kubernetes.io/instance: postgres-bux-wallet-demo
+        app.kubernetes.io/component: database
+        app.kubernetes.io/part-of: bux-wallet
+        app.kubernetes.io/managed-by: kubectl
+    spec:
+      containers:
+        - name: postgres-bux-wallet-demo
+          image: postgres:15.2-alpine
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+              name: pgdb
+          envFrom:
+            - configMapRef:
+                name: postgres-bux-wallet-demo
+          volumeMounts:
+            - name: pv
+              mountPath: /var/postgresql/data
+      volumes:
+        - name: pv
+          persistentVolumeClaim:
+            claimName: postgres-pvc

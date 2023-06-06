@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bux-wallet-backend-demo
+  labels:
+    app.kubernetes.io/name: bux-wallet-backend
+    app.kubernetes.io/instance: bux-wallet-backend-demo
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: bux-wallet
+    app.kubernetes.io/managed-by: kubectl
+  annotations:
+    cert-manager.io/cluster-issuer: lets-encrypt
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  tls:
+    - hosts:
+        - bux-wallet.4chain.space
+      secretName: bux-wallet-tls
+  rules:
+    - host: bux-wallet.4chain.space
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: bux-wallet-backend-demo
+                port:
+                  name: web
+          - path: /swagger
+            pathType: Prefix
+            backend:
+              service:
+                name: bux-wallet-backend-demo
+                port:
+                  name: web
