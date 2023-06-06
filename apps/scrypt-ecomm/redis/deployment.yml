@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scrypt-redis-deployment
+  labels:
+    app: scrypt-ecomm
+    instance: scrypt-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scrypt-ecomm
+      instance: scrypt-redis
+  template:
+    metadata:
+      labels:
+        app: scrypt-ecomm
+        instance: scrypt-redis
+    spec:
+      containers:
+        - name: scrypt-redis-container
+          image: redis:7.2-rc-alpine
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 6379
+              name: redis-port
+          volumeMounts:
+            - name: scrypt-redis-pv
+              mountPath: /data/redis
+      volumes:
+        - name: scrypt-redis-pv
+          persistentVolumeClaim:
+            claimName: scrypt-redis-pvc

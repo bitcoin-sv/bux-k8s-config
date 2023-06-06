@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: scrypt-ecomm-ingress
+  labels:
+    app: scrypt-ecomm
+    instance: scrypt-backend
+  annotations:
+    cert-manager.io/cluster-issuer: lets-encrypt
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  tls:
+    - hosts:
+        - scrypt.4chain.space
+      secretName: scrypt-tls
+  rules:
+    - host: scrypt.4chain.space
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: scrypt-backend-service
+              port:
+                name: web

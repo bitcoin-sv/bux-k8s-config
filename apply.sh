@@ -19,7 +19,18 @@ sudo sudo microk8s.kubectl apply  -f ./devops/cert-manager/cluster-issuer.yml \
                                   -f ./apps/bux-server/postgres/service.yml \
                                   -f ./apps/bux-server/redis/pvc.yml \
                                   -f ./apps/bux-server/redis/deployment.yml \
-                                  -f ./apps/bux-server/redis/service.yml;
+                                  -f ./apps/bux-server/redis/service.yml \
+				  -f ./apps/scrypt-ecomm/redis/pvc.yml \
+				  -f ./apps/scrypt-ecomm/redis/deployment.yml \
+				  -f ./apps/scrypt-ecomm/redis/service.yml \
+				  -f ./apps/scrypt-ecomm/mongo/pvc.yml \
+				  -f ./apps/scrypt-ecomm/mongo/deployment.yml \
+				  -f ./apps/scrypt-ecomm/mongo/service.yml \
+				  -f ./apps/scrypt-ecomm/scrypt-backend/environment.yml \
+				  -f ./apps/scrypt-ecomm/scrypt-backend/secret.yml \
+				  -f ./apps/scrypt-ecomm/scrypt-backend/deployment.yml \
+				  -f ./apps/scrypt-ecomm/scrypt-backend/service.yml \
+				  -f ./apps/scrypt-ecomm/scrypt-backend/ingress.yml;
 
 sudo microk8s kubectl apply -k apps/bux-server/bux/development;
 
@@ -29,3 +40,5 @@ sudo sudo microk8s.kubectl -n argocd apply -f ./devops/argo-cd/repository-connec
                                            -f ./apps/bux-server/postgres/argocd-def.yml \
                                            -f ./apps/bux-server/redis/argocd-def.yml \
                                            -f ./apps/bux-server/bux/development/argocd-def.yml \
+					   -f ./apps/scrypt-ecomm/redis/argocd-def.yml \
+					   -f ./apps/scrypt-ecomm/mongo/argocd-def.yml;
