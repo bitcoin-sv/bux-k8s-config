@@ -11,4 +11,4 @@ metadata:
 data:
   DB_HOST: 'postgres-bux-wallet-demo'
   BUX_ADMIN_XPRIV: 'xprv9s21ZrQH143K3CbJXirfrtpLvhT3Vgusdo8coBritQ3rcS7Jy7sxWhatuxG5h2y1Cqj8FKmPp69536gmjYRpfga2MJdsGyBsnB12E19CESK'
-  BUX_SERVER_URL: 'http://bux-server/v1'
+  BUX_SERVER_URL: 'http://bux-server:3003/v1'
