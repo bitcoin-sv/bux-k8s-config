@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bux-wallet-frontend-demo
+  labels:
+    app.kubernetes.io/name: bux-wallet-frontend
+    app.kubernetes.io/instance: bux-wallet-frontend-demo
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: bux-wallet
+    app.kubernetes.io/managed-by: kubectl
+data:
+  VITE_API_URL: 'https://bux-wallet.4chain.space'
+  VITE_API_TOKEN: 'f3TiRVL602ih65Hyzd5Ci6qcGbP'

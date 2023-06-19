@@ -14,17 +14,16 @@ metadata:
 spec:
   tls:
     - hosts:
-        - bux-wallet.4chain.space
+        - dev.4chain.space
       secretName: bux-wallet-tls
   rules:
-    - host: bux-wallet.4chain.space
+    - host: dev.4chain.space
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                ## FIXME point to bux-wallet-frontend when deployment will be prepared
-                name: bux-server
+                name: bux-wallet-frontend-demo
                 port:
                   name: web
