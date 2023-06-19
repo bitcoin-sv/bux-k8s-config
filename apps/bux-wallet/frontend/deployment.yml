@@ -46,6 +46,6 @@ spec:
                   name: bux-wallet-frontend-demo
                   key: VITE_API_TOKEN
           ports:
-            - containerPort: 80
+            - containerPort: 5000
               name: web
               protocol: TCP
