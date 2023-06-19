@@ -60,11 +60,12 @@
   },
   "paymail": {
     "enabled": true,
-    "default_from_paymail": "from@domain.com",
+    "default_from_paymail": "bux@4chain.space",
     "default_note": "bux Address Resolution",
     "domain_validation_enabled": false,
     "domains": [
-      "localhost"
+      "localhost",
+      "4chain.space"
     ],
     "sender_validation_enabled": false
   },
