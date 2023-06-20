@@ -2,17 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: bux-wallet-frontend-demo
-  labels:
-    app.kubernetes.io/name: bux-wallet-frontend
-    app.kubernetes.io/instance: bux-wallet-frontend-demo
-    app.kubernetes.io/component: frontend
-    app.kubernetes.io/part-of: bux-wallet
-    app.kubernetes.io/managed-by: kubectl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/instance: bux-wallet-frontend-demo
+      app: bux-wallet-frontend-demo
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -21,16 +15,12 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: bux-wallet-frontend
-        app.kubernetes.io/instance: bux-wallet-frontend-demo
-        app.kubernetes.io/component: frontend
-        app.kubernetes.io/part-of: bux-wallet
-        app.kubernetes.io/managed-by: kubectl
+        app: bux-wallet-frontend-demo
     spec:
       containers:
         - name: bux-wallet-frontend-demo
-          image: 4chainstudioprv/bux-wallet-frontend:latest
-          imagePullPolicy: Always
+          image: 4chain/bux-wallet-frontend:0.7.9
+          imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
                 name: bux-wallet-frontend-demo
@@ -46,6 +36,6 @@ spec:
                   name: bux-wallet-frontend-demo
                   key: VITE_API_TOKEN
           ports:
-            - containerPort: 5000
+            - containerPort: 80
               name: web
               protocol: TCP

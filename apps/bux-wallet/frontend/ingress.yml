@@ -2,22 +2,15 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: bux-wallet-frontend-demo
-  labels:
-    app.kubernetes.io/name: bux-wallet-frontend
-    app.kubernetes.io/instance: bux-wallet-frontend-demo
-    app.kubernetes.io/component: frontend
-    app.kubernetes.io/part-of: bux-wallet
-    app.kubernetes.io/managed-by: kubectl
   annotations:
     cert-manager.io/cluster-issuer: lets-encrypt
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
   tls:
     - hosts:
-        - dev.4chain.space
+        - bux-wallet.4chain.space
       secretName: bux-wallet-tls
   rules:
-    - host: dev.4chain.space
+    - host: bux-wallet.4chain.space
       http:
         paths:
           - path: /
