@@ -27,9 +27,11 @@ spec:
         app.kubernetes.io/part-of: bux-wallet
         app.kubernetes.io/managed-by: kubectl
     spec:
+      imagePullSecrets:
+        - name: 4chainregistry
       containers:
         - name: bux-wallet-backend-demo
-          image: 4chainstudio/bux-wallet-backend:v0.9.0
+          image: 4chain/bux-wallet-backend:v0.9.3
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:

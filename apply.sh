@@ -51,7 +51,10 @@ sudo microk8s kubectl apply \
   -f ./apps/bux-wallet/backend/deployment.yml \
   -f ./apps/bux-wallet/backend/service.yml \
   -f ./apps/bux-wallet/backend/ingress.yml \
-  -f ./apps/bux-wallet/frontend/ingress.yml;
+  -f ./apps/bux-wallet/frontend/ingress.yml \
+  -f ./apps/bux-wallet/frontend/environment.yml \
+  -f ./apps/bux-wallet/frontend/service.yml \
+  -f ./apps/bux-wallet/frontend/deployment.yml;
 
 sudo sudo microk8s.kubectl -n argocd apply \
       -f ./devops/argo-cd/repository-connector-secret.yml \
@@ -63,6 +66,7 @@ sudo sudo microk8s.kubectl -n argocd apply \
       -f ./apps/scrypt-ecomm/redis/argocd-def.yml \
       -f ./apps/scrypt-ecomm/mongo/argocd-def.yml \
       -f ./apps/bux-wallet/postgres/argocd-def.yml \
+      -f ./apps/bux-wallet/frontend/argocd-def.yml \
       -f ./apps/bux-wallet/backend/argocd-def.yml;
 
 
