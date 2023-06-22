@@ -82,8 +82,8 @@
   "server": {
     "idle_timeout": "60s",
     "port": "3003",
-    "read_timeout": "15s",
-    "write_timeout": "15s"
+    "read_timeout": "40s",
+    "write_timeout": "40s"
   },
   "sql": {
     "host": "postgres-service",
