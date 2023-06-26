@@ -30,6 +30,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Overwrite dockerfile
+        run: cp ./k8s-config/docker/bux-server.Dockerfile ./bux-server/Dockerfile
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
