@@ -32,7 +32,7 @@ spec:
       containers:
         - name: bux-server
           image: 4chainstudio/bux-server:v0.5.3
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           envFrom:
             - configMapRef:
                 name: bux-server-env
