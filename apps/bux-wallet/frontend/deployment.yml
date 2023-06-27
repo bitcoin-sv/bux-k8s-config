@@ -21,23 +21,8 @@ spec:
         - name: 4chainregistry
       containers:
         - name: bux-wallet-frontend-demo
-          image: 4chain/bux-wallet-frontend:0.7.10
-
-          imagePullPolicy: Always
-          envFrom:
-            - configMapRef:
-                name: bux-wallet-frontend-demo
-          env:
-            - name: VITE_API_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: bux-wallet-frontend-demo
-                  key: VITE_API_URL
-            - name: VITE_API_TOKEN
-              valueFrom:
-                configMapKeyRef:
-                  name: bux-wallet-frontend-demo
-                  key: VITE_API_TOKEN
+          image: 4chain/bux-wallet-frontend:0.8.4
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
               name: web
