@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bux-wallet-backend-demo
+  labels:
+    app.kubernetes.io/name: bux-wallet-backend
+    app.kubernetes.io/instance: bux-wallet-backend-demo
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: bux-wallet
+    app.kubernetes.io/managed-by: kubectl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: bux-wallet-backend-demo
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: bux-wallet-backend
+        app.kubernetes.io/instance: bux-wallet-backend-demo
+        app.kubernetes.io/component: backend
+        app.kubernetes.io/part-of: bux-wallet
+        app.kubernetes.io/managed-by: kubectl
+    spec:
+      imagePullSecrets:
+        - name: 4chainregistry
+      containers:
+        - name: bux-wallet-backend-demo
+          image: 4chainstudio/bux-wallet-backend:v0.8.0
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: bux-wallet-backend-demo
+          env:
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-bux-wallet-demo
+                  key: POSTGRES_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-bux-wallet-demo
+                  key: POSTGRES_PASSWORD
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-bux-wallet-demo
+                  key: POSTGRES_DB
+          ports:
+            - containerPort: 8080
+              name: web
+              protocol: TCP

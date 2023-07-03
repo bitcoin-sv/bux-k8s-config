@@ -1,0 +1,31 @@
+name: "Check image version from deployment"
+description: "Checking current and latest version of component specified in given k8s deployment file"
+inputs:
+  deployment_file:
+    required: true
+    description: 'Path to deployment file from which image should be compared against newest tag version'
+  dockerhub_user:
+    required: false
+    description: 'Dockerhub username, required for private repositories'
+  dockerhub_password:
+    required: false
+    description: 'Dockerhub password/token, required for private repositories'
+
+outputs:
+  name:
+    description: 'Name of the component loaded from deployment file'
+  currentVersion:
+    description: 'Version of component specified in deployment file'
+  repository:
+    description: 'Dockerhub repository containing image'
+  owner:
+    description: 'Dockerhub owner of repository containing image'
+  image:
+    description: 'Image name'
+  latestVersion:
+    description: 'Latest version tag in dockerhub repository'
+  hasNewerImage:
+    description: 'True if there is a newer image in repository'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'

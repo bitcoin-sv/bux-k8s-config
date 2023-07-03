@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: bux-server
+    app: bux
+    instance: bux-server
+  name: bux-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bux-server
+      app: bux
+      instance: bux-server
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: bux
+        instance: bux-server
+        app.kubernetes.io/name: bux-server
+    spec:
+      volumes:
+        - name: config-volume
+          configMap:
+            name: bux-server-env-configs
+      containers:
+        - name: bux-server
+          image: 4chainstudio/bux-server:v0.5.3
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: bux-server-env
+          env:
+            - name: BUX_SQL__USER
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-configuration
+                  key: POSTGRES_USER
+            - name: BUX_SQL__PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-configuration
+                  key: POSTGRES_PASSWORD
+            - name: BUX_SQL__NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-configuration
+                  key: POSTGRES_DB
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config/envs
+          ports:
+            - containerPort: 3003
+              name: web
+              protocol: TCP
