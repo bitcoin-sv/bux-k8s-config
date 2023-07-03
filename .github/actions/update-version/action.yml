@@ -1,0 +1,45 @@
+name: "Update version"
+description: "Checking bux version"
+
+inputs:
+  deployment_file:
+    required: true
+    description: 'Path to deployment file from which image should be compared against newest tag version'
+  dockerhub_user:
+    required: false
+    description: 'Dockerhub username, required for private repositories'
+  dockerhub_password:
+    required: false
+    description: 'Dockerhub password/token, required for private repositories'
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Check version"
+      id: check-version
+      uses: ./.github/actions/check-version
+      with:
+        deployment_file: ${{ inputs.deployment_file }}
+        dockerhub_user: ${{ inputs.dockerhub_user }}
+        dockerhub_password: ${{ inputs.dockerhub_password }}
+    - name: "Update version"
+      if: success() && steps.check-version.outputs.hasNewerImage == 'true'
+      uses: mikefarah/yq@master
+      with:
+        cmd: yq -i '.spec.template.spec.containers[0].image = "${{steps.check-version.outputs.image}}:${{steps.check-version.outputs.latestVersion}}"' ${{ inputs.deployment_file }}
+    - name: "Create Pull Request"
+      if: success() && steps.check-version.outputs.hasNewerImage == 'true'
+      id: cpr
+      uses: peter-evans/create-pull-request@v5
+      with:
+        commit-message: "feat: update ${{steps.check-version.outputs.image}} in ${{steps.check-version.outputs.name}} to ${{steps.check-version.outputs.latestVersion}}"
+        committer: GitHub <noreply@github.com>
+        author: 4ChainBot <noreply@4chain.studio>
+        branch: update-${{steps.check-version.outputs.name}}
+        delete-branch: true
+        title: "feat: update ${{steps.check-version.outputs.image}} in ${{steps.check-version.outputs.name}} to ${{steps.check-version.outputs.latestVersion}}"
+        body: |
+          This is PR automatically created because of release of ${{steps.check-version.outputs.image}} ${{steps.check-version.outputs.latestVersion}}
+        labels: |
+          automated pr
+        draft: false
