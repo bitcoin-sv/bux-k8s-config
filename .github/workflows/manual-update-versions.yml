@@ -1,4 +1,4 @@
-name: '[Manual] Check the versions'
+name: '[Manual] update versions'
 on:
   workflow_dispatch:
 
@@ -8,24 +8,24 @@ jobs:
     steps:
       - name: "checkout repository"
         uses: actions/checkout@v3
-      - name: "check bux-server version"
-        uses: ./.github/actions/check-version
+      - name: "update bux-server version"
+        uses: ./.github/actions/update-version
         with:
           deployment_file: './apps/bux-server/bux/base/deployment.yml'
 
-      - name: "check pulse version"
-        uses: ./.github/actions/check-version
+      - name: "update pulse version"
+        uses: ./.github/actions/update-version
         with:
           deployment_file: './apps/pulse/deployment.yml'
 
-      - name: "check bux-wallet backend version"
-        uses: ./.github/actions/check-version
+      - name: "update bux-wallet backend version"
+        uses: ./.github/actions/update-version
         with:
           deployment_file: './apps/bux-wallet/backend/deployment.yml'
           dockerhub_user: ${{ secrets.DOCKERHUB_USERNAME_4CHAIN }}
           dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN_4CHAIN }}
-      - name: "check bux-wallet frontend version"
-        uses: ./.github/actions/check-version
+      - name: "update bux-wallet frontend version"
+        uses: ./.github/actions/update-version
         with:
           deployment_file: './apps/bux-wallet/frontend/deployment.yml'
           dockerhub_user: ${{ secrets.DOCKERHUB_USERNAME_4CHAIN }}
