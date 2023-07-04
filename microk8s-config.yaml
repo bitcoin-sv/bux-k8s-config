@@ -6,8 +6,6 @@ addons:
   - name: helm
   - name: helm3
   - name: argocd
-  - name: traefik
-    args: ["--set=\"additionalArguments={--serverstransport.insecureskipverify=true}\""]
   - name: cert-manager
   - name: metallb
     args: [185.194.216.93/32]
