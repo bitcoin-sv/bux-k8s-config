@@ -21,7 +21,7 @@ spec:
         - name: 4chainregistry
       containers:
         - name: bux-wallet-frontend-demo
-          image: 4chain/bux-wallet-frontend:0.8.6
+          image: 4chain/bux-wallet-frontend:0.9.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
