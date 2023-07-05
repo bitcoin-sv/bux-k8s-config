@@ -1,4 +1,4 @@
-name: 'Update service versions'
+name: Update services version
 on:
   workflow_dispatch:
 
