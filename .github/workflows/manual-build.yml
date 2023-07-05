@@ -15,7 +15,10 @@ jobs:
   update-version-pr:
     needs: build-docker
     if: success()
-    uses: ./.github/workflows/update-bux-pr.yml
-    secrets: inherit
-    with:
-      version: ${{ inputs.revision }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: "update bux-server version"
+        uses: ./.github/actions/update-version
+        with:
+          deployment_file: './apps/bux-server/bux/base/deployment.yml'

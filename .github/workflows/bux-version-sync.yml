@@ -20,10 +20,3 @@ jobs:
     secrets: inherit
     with:
       version: ${{ needs.check-newest-version.outputs.buxversion }}
-  update-version-pr:
-    needs: [ check-newest-version, build-docker ]
-    if: success()
-    uses: ./.github/workflows/update-bux-pr.yml
-    secrets: inherit
-    with:
-      version: ${{ needs.check-newest-version.outputs.buxversion }}
