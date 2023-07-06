@@ -1,6 +1,18 @@
-name: Update services version
+name: '[Schedule] Update services version'
 on:
+  schedule:
+    # Run every 5th minute from 7 through 59.
+    # Example: ... 10:52, 10:57, 11:07, 11:12, 11:17 ...
+    # It means that around full hour (like 11:00) there will be a little longer gap,
+    # but from the investigation it occurs that often (in a free plan of gh actions)
+     # it is hard to run scheduled action near to full hour as there are a lot of actions that want to be run at that time.
+    - cron: '7/5 * * * *'
   workflow_dispatch:
+
+####################################################################################################
+# ⚠️ To prevent from getting PR that has branch not up to date with main from the beginning,
+#  focus on sorting the steps to first make all the updates with automatic commit and then with PRs
+####################################################################################################
 
 jobs:
   update-versions:
@@ -8,6 +20,30 @@ jobs:
     steps:
       - name: "checkout repository"
         uses: actions/checkout@v3
+
+      ############################################
+      # UPDATE WITH AUTOMATIC COMMIT (pr: false)
+      ############################################
+
+      - name: "update bux-wallet backend version"
+        uses: ./.github/actions/update-version
+        with:
+          deployment_file: './apps/bux-wallet/backend/deployment.yml'
+          dockerhub_user: ${{ secrets.DOCKERHUB_USERNAME_4CHAIN }}
+          dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN_4CHAIN }}
+          pr: false
+      - name: "update bux-wallet frontend version"
+        uses: ./.github/actions/update-version
+        with:
+          deployment_file: './apps/bux-wallet/frontend/deployment.yml'
+          dockerhub_user: ${{ secrets.DOCKERHUB_USERNAME_4CHAIN }}
+          dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN_4CHAIN }}
+          pr: false
+
+      ############################################
+      # UPDATE WITH AUTOMATIC PR (pr: true)
+      ############################################
+
       - name: "update bux-server version"
         uses: ./.github/actions/update-version
         with:
@@ -17,16 +53,3 @@ jobs:
         uses: ./.github/actions/update-version
         with:
           deployment_file: './apps/pulse/deployment.yml'
-
-      - name: "update bux-wallet backend version"
-        uses: ./.github/actions/update-version
-        with:
-          deployment_file: './apps/bux-wallet/backend/deployment.yml'
-          dockerhub_user: ${{ secrets.DOCKERHUB_USERNAME_4CHAIN }}
-          dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN_4CHAIN }}
-      - name: "update bux-wallet frontend version"
-        uses: ./.github/actions/update-version
-        with:
-          deployment_file: './apps/bux-wallet/frontend/deployment.yml'
-          dockerhub_user: ${{ secrets.DOCKERHUB_USERNAME_4CHAIN }}
-          dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN_4CHAIN }}

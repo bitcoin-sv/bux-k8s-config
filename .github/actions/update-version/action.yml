@@ -11,6 +11,10 @@ inputs:
   dockerhub_password:
     required: false
     description: 'Dockerhub password/token, required for private repositories'
+  pr:
+    required: false
+    description: 'Should component be updated by creating a PR (default true)'
+    default: "true"
 
 runs:
   using: "composite"
@@ -28,7 +32,7 @@ runs:
       with:
         cmd: yq -i '.spec.template.spec.containers[0].image = "${{steps.check-version.outputs.image}}:${{steps.check-version.outputs.latestVersion}}"' ${{ inputs.deployment_file }}
     - name: "Create Pull Request"
-      if: success() && steps.check-version.outputs.hasNewerImage == 'true'
+      if: inputs.pr == 'true' && success() && steps.check-version.outputs.hasNewerImage == 'true'
       id: cpr
       uses: peter-evans/create-pull-request@v5
       with:
@@ -43,3 +47,23 @@ runs:
         labels: |
           automated pr
         draft: false
+    - name: "Commit & Push"
+      if: inputs.pr == 'false' && success() && steps.check-version.outputs.hasNewerImage == 'true'
+      uses: EndBug/add-and-commit@v9
+      with:
+        add: ${{inputs.deployment_file}}
+        message: "feat: update ${{steps.check-version.outputs.image}} in ${{steps.check-version.outputs.name}} to ${{steps.check-version.outputs.latestVersion}}"
+
+        # Determines the way the action fills missing author name and email. Three options are available:
+        # - github_actor -> UserName <UserName@users.noreply.github.com>
+        # - user_info -> Your Display Name <your-actual@email.com>
+        # - github_actions -> github-actions <email associated with the github logo>
+        # Default: github_actor
+        default_author: github_actions
+
+        # The way the action should handle pathspec errors from the add and remove commands. Three options are available:
+        # - ignore -> errors will be logged but the step won't fail
+        # - exitImmediately -> the action will stop right away, and the step will fail
+        # - exitAtEnd -> the action will go on, every pathspec error will be logged at the end, the step will fail.
+        # Default: ignore
+        pathspec_error_handling: exitImmediately
