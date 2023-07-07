@@ -14,6 +14,9 @@
     "run": "npx ts-node src/main.ts",
     "all": "npm run build && npm run format && npm run lint && npm test && npm run package"
   },
+  "engines" : {
+    "node" : ">=16.0.0 <17.0.0"
+  },
   "author": "",
   "license": "MIT",
   "dependencies": {

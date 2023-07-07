@@ -9,11 +9,13 @@ It holds a configuration and scripts to setup 4chain Demo environment on the vps
   ├── apply.sh -> script to manually apply all k8s yamls
   ├── apps                      -> here we keep deployment config for applications
   │    └── <<application-name>> -> contains all config (k8s yamls) for application of name <<application-name>> that we're serving
-  │        ├── ...
+  │          └── ...
   ├── bux-server.version
   ├── devops              -> here we keep configuration for tools such as cert-manager or argocd
-  │    ├── <<tool-name>>  -> contains all config (k8s yamls) for tool of name <<tool-name>> that we're deploying on k8s
-  │    │     └── ...
+  │    └── <<tool-name>>  -> contains all config (k8s yamls) for tool of name <<tool-name>> that we're deploying on k8s
+  │          └── ...
+  ├── docker
+  |     └── <<tool-name>>.Dockerfile -> custom dockerfile used to make a custom docker image of the tool (ex. bux-server)
   ├── install_microk8s.sh   -> script that should install and prepare microk8s environment (in case if we want do an installation on clean machine)
   ├── microk8s-config.yaml  -> configuration for microk8s, used for example for enabling addons
   └── update_microk8s.sh    -> script that should update configuration of microk8s based on file microk8s-config.yaml
@@ -76,16 +78,88 @@ This action is triggered by GH scheduler, but also there is a possibility to tri
 What is it doing:
 - check what is the newest tag for bux-server (reusing workflow [check-bux-version.yml](./.github/workflows/check-bux-version.yml))
 - verify if there is docker image with coresponding tag in our dockerhub repository (reusing workflow [check-bux-version.yml](./.github/workflows/check-bux-version.yml))
-- if there is no coresponding version of docker image then it builds it and push (reusing workflow [build-bux.yml](./.github/workflows/build-bux.yml))
-- when the new image was build and pushed then it updates bux-server version in this repository and create a PR for that change (reusing workflow [update-bux-pr.yml](./.github/workflows/update-bux-pr.yml))
+- if there is no corresponding version of docker image then it builds it and push (reusing workflow [build-bux.yml](./.github/workflows/build-bux.yml))
 
 #### manual actions
 
 Several manual actions was prepared to make debugging and developing more convenience:
 - [Run bux-server docker image build manually](https://github.com/gignative-solutions/k8s-config/actions/workflows/manual-build.yml) - this allows to trigger build of bux server image from given git revision and automatically will prepare a PR with changing the version to that newly built
 - [[Schedule] Prepare newest version of bux-server](https://github.com/gignative-solutions/k8s-config/actions/workflows/bux-version-sync.yml) - can be manually triggered and how it's working is described in previous section
-- [Check if newest bux-server exists](https://github.com/gignative-solutions/k8s-config/actions/workflows/manual-check-version.yml) - can be used to check the results of checking the newest version number of bux-server and if corresponding image exists
 
+
+### Automatic update of services
+
+-----------------------------------------------------------------------
+
+To automatically update our services we created a github workflow and a bunch of custom actions.
+
+```tree
+  └──.github
+     ├── actions
+     │   ├── check-version
+     │        ├── action.yml -> defines action (javascript gh action) which is checking current version of the image in deployment file and in docker repository
+     │   ├── update-version
+     │        ├── action.yml -> defines action (composite gh action) which is checking if there is a newer versio and updating deployment file if there is
+     ├── actions
+         ├── update-versions.yml -> defines the workflow which is updating specified deployment files
+```
+
+#### Workflow
+
+In a file [update-versions.yml](.github/workflows/update-versions.yml) you can find a definition of workflow.
+
+What is it doing is:
+1. Triggers for the workflow
+   1. start the workflow in a scheduled manner (every 5 minutes).
+   2. allow to start the workflow manually
+2. Job
+  - checkout the repository -> it is needed for run "private" custom actions and actually also for updating deployment files
+  - run custom actions update-version with option to commit the update in current branch (`pr: false`)
+  - run custom actions update-version with option to create a PR with updated deployment file
+
+The output of running of the job is:
+If version in docker repository is higher than version specified in deployment files, then deployment file is updated with the higher version and
+- `pr: false` is specified, then a commit to current branch is made and pushed
+- `pr: true` or no `pr` input at all, then PR is created (or updated if there is already older one) for this update
+
+
+#### Update version action
+
+In a file [update-version/action.yml](.github/actions/update-version/action.yml) 
+the action for updating a single deployment file is defined.
+
+The action is a `composite` type action which means it's set of workflow steps extracted to an action to make it reusable.
+
+What is it doing is:
+1. check the versions of the image
+   1. defined in deployment file
+   2. based on tags in docker repository
+2. If version in docker repository is higher than version specified in deployment files, then deployment file is updated with the higher version
+3. if
+- `pr: false` is specified, then a commit to current branch is made and pushed
+- `pr: true` or no `pr` input at all, then PR is created (or updated if there is already older one) for this update
+
+Instruction how to use this action can be found in [README.md](.github/actions/update-version/README.md)
+
+#### Check version action
+
+In a file [check-version/action.yml](.github/actions/check-version/action.yml), 
+there is defined an action for checking a version of image defined in deployment file.
+
+It is a javascript action, written in typescript, compiled and aggregated to single file dist/index.js
+
+What is it doing is:
+1. parsing provided deployment.yml file
+2. extracting information about container
+   1. name, which becomes a name in the output
+   2. image name (ex. 4chain/bux-wallet-frontend)
+   3. version of the image
+   4. owner (ex. 4chain)
+   5. repository (ex. bux-wallet-frontend)
+3. checks the docker repository for highest version number containing {major}.{minor}.{patch} information
+4. checks whether highest version in repository is higher than the version in deployment file
+
+Instruction how to use this action can be found in [README.md](.github/actions/check-version/README.md)
 
 ### Deployment of applications and exposing them on domain address
 
@@ -314,7 +388,7 @@ Then, we use defined claim&volume in deployment file this way:
 
     spec:
       containers:
-...
+#...
           volumeMounts:
             - name: pv
               mountPath: /var/postgresql/data
@@ -356,9 +430,9 @@ metadata:
   labels:
     app: bux
 data:
-  POSTGRES_DB: bux
-  POSTGRES_USER: bux
-  POSTGRES_PASSWORD: postgres
+  POSTGRES_DB: "bux"
+  POSTGRES_USER: "bux"
+  POSTGRES_PASSWORD: "postgres"
 
 ```
 In the data section we can easily define all key-value pairs to be exposed as environment variables inside single pod.
@@ -398,9 +472,9 @@ addons:
 >> ArgoCD Ingress definition was created in devops/argo-cd/ingress.yml file. 
 Something quite important is that we can't change:
 ```yaml
-      ...
+      #...
       secretName: argocd-secret
-      ...
+      #...
 ```
 is this secretName predefined in argocd configuration.
 
@@ -470,7 +544,7 @@ metadata:
   labels:
     argocd.argoproj.io/secret-type: repository
 stringData:
-  url: ssh://git@github.com:gignative-solutions/k8s-config.git
+  url: "ssh://git@github.com:gignative-solutions/k8s-config.git"
   sshPrivateKey: |
     -----BEGIN OPENSSH PRIVATE KEY-----
     ...

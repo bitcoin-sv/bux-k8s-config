@@ -1,5 +1,6 @@
 name: '[Schedule] Update services version'
 on:
+  #start the workflow in a scheduled manner
   schedule:
     # Run every 5th minute from 7 through 59.
     # Example: ... 10:52, 10:57, 11:07, 11:12, 11:17 ...
@@ -7,6 +8,7 @@ on:
     # but from the investigation it occurs that often (in a free plan of gh actions)
      # it is hard to run scheduled action near to full hour as there are a lot of actions that want to be run at that time.
     - cron: '7/5 * * * *'
+  # allow to start the workflow manually
   workflow_dispatch:
 
 ####################################################################################################
