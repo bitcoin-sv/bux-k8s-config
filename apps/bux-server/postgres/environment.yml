@@ -6,6 +6,6 @@ metadata:
     app: bux
     instance: postgres
 data:
-  POSTGRES_DB: bux
-  POSTGRES_USER: bux
-  POSTGRES_PASSWORD: postgres
+  POSTGRES_DB: "bux"
+  POSTGRES_USER: "bux"
+  POSTGRES_PASSWORD: "postgres"
