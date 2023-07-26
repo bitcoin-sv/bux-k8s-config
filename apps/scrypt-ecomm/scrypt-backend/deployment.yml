@@ -25,7 +25,7 @@ spec:
         - name: regcred
       containers:
         - name: scrypt-backend-container
-          image: ghcr.io/gignative-solutions/scrypt-backend:1.0.0 
+          image: ghcr.io/4chain-AG/scrypt-backend:1.0.0
           imagePullPolicy: Always
           ports:
             - containerPort: 3005

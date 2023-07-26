@@ -83,8 +83,8 @@ What is it doing:
 #### manual actions
 
 Several manual actions was prepared to make debugging and developing more convenience:
-- [Run bux-server docker image build manually](https://github.com/gignative-solutions/k8s-config/actions/workflows/manual-build.yml) - this allows to trigger build of bux server image from given git revision and automatically will prepare a PR with changing the version to that newly built
-- [[Schedule] Prepare newest version of bux-server](https://github.com/gignative-solutions/k8s-config/actions/workflows/bux-version-sync.yml) - can be manually triggered and how it's working is described in previous section
+- [Run bux-server docker image build manually](https://github.com/4chain-AG/k8s-config/actions/workflows/manual-build.yml) - this allows to trigger build of bux server image from given git revision and automatically will prepare a PR with changing the version to that newly built
+- [[Schedule] Prepare newest version of bux-server](https://github.com/4chain-AG/k8s-config/actions/workflows/bux-version-sync.yml) - can be manually triggered and how it's working is described in previous section
 
 
 ### Automatic update of services
@@ -501,7 +501,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: git@github.com:gignative-solutions/k8s-config.git
+    repoURL: git@github.com:4chain-AG/k8s-config.git
     targetRevision: HEAD
     path: apps/bux-console
   destination:
@@ -544,7 +544,7 @@ metadata:
   labels:
     argocd.argoproj.io/secret-type: repository
 stringData:
-  url: "ssh://git@github.com:gignative-solutions/k8s-config.git"
+  url: "ssh://git@github.com:4chain-AG/k8s-config.git"
   sshPrivateKey: |
     -----BEGIN OPENSSH PRIVATE KEY-----
     ...
