@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: git@github.com:4chain-AG/k8s-config.git
+    repoURL: git@github.com:4chain-ag/k8s-config.git
     targetRevision: HEAD
     path: apps/bux-wallet/backend
   destination:

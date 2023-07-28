@@ -501,7 +501,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: git@github.com:4chain-AG/k8s-config.git
+    repoURL: git@github.com:4chain-ag/k8s-config.git
     targetRevision: HEAD
     path: apps/bux-console
   destination:
@@ -544,7 +544,7 @@ metadata:
   labels:
     argocd.argoproj.io/secret-type: repository
 stringData:
-  url: "ssh://git@github.com:4chain-AG/k8s-config.git"
+  url: "git@github.com:4chain-ag/k8s-config.git"
   sshPrivateKey: |
     -----BEGIN OPENSSH PRIVATE KEY-----
     ...
