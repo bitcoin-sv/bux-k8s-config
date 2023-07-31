@@ -29,14 +29,6 @@ sudo sudo microk8s.kubectl apply \
   -f ./apps/bux-server/redis/service.yml;
 sudo microk8s kubectl apply -k apps/bux-server/bux/development;
 
-sudo sudo microk8s.kubectl apply \
-  -f ./apps/scrypt-ecomm/redis/pvc.yml \
-  -f ./apps/scrypt-ecomm/redis/deployment.yml \
-  -f ./apps/scrypt-ecomm/redis/service.yml \
-  -f ./apps/scrypt-ecomm/mongo/pvc.yml \
-  -f ./apps/scrypt-ecomm/mongo/deployment.yml \
-  -f ./apps/scrypt-ecomm/mongo/service.yml;
-
 sudo microk8s kubectl apply \
   -f ./apps/bux-wallet/postgres/environment.yml \
   -f ./apps/bux-wallet/postgres/pvc.yml \
