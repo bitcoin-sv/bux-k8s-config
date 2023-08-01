@@ -31,7 +31,7 @@ spec:
         - name: 4chainregistry
       containers:
         - name: bux-wallet-backend-demo
-          image: 4chain/bux-wallet-backend:v0.14.0
+          image: 4chain/bux-wallet-backend:v0.15.0
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
