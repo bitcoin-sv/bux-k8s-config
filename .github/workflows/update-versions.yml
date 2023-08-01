@@ -11,6 +11,10 @@ on:
   # allow to start the workflow manually
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pull-requests: write
+
 ####################################################################################################
 # ⚠️ To prevent from getting PR that has branch not up to date with main from the beginning,
 #  focus on sorting the steps to first make all the updates with automatic commit and then with PRs
