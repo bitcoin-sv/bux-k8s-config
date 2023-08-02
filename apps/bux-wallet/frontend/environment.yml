@@ -9,4 +9,8 @@ metadata:
     app.kubernetes.io/part-of: bux-wallet
     app.kubernetes.io/managed-by: kubectl
 data:
-  VITE_API_URL: 'https://bux-wallet.4chain.space' 
+  env-config.json: |
+    {
+      "apiUrl": "https://bux-wallet.4chain.space",
+      "paymailDomain": "4chain.space"
+    }

@@ -23,7 +23,16 @@ spec:
         - name: bux-wallet-frontend-demo
           image: 4chain/bux-wallet-frontend:0.17.0
           imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: env-config
+              mountPath: /usr/share/nginx/html/env-config.json
+              subPath: env-config.json
+              readOnly: true
           ports:
             - containerPort: 80
               name: web
               protocol: TCP
+      volumes:
+        - name: env-config
+          configMap:
+            name: bux-wallet-frontend-demo
