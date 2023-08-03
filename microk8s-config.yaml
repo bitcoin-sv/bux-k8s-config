@@ -8,11 +8,11 @@ addons:
   - name: argocd
   - name: cert-manager
   - name: metallb
-    args: [185.194.216.93/32]
+    args: [207.244.234.196/32]
   - name: openebs
 
 # These arguments will be set by the 'dns' addon. We set them manually to avoid
 # unnecessary Kubernetes restarts while the cluster is bootstrapping.
 extraKubeletArgs:
-  --cluster-dns: 207.244.234.196
+  --cluster-dns: 10.152.183.10
   --cluster-domain: cluster.local
