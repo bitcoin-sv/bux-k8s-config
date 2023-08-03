@@ -35,8 +35,6 @@ jobs:
         uses: ./.github/actions/update-version
         with:
           deployment_file: './apps/bux-wallet/backend/deployment.yml'
-          dockerhub_user: ${{ secrets.DOCKERHUB_USERNAME_4CHAIN }}
-          dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN_4CHAIN }}
           pr: false
       - name: "update bux-wallet frontend version"
         uses: ./.github/actions/update-version
