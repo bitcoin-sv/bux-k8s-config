@@ -14,5 +14,5 @@ addons:
 # These arguments will be set by the 'dns' addon. We set them manually to avoid
 # unnecessary Kubernetes restarts while the cluster is bootstrapping.
 extraKubeletArgs:
-  --cluster-dns: 10.152.183.10
+  --cluster-dns: 207.244.234.196
   --cluster-domain: cluster.local
