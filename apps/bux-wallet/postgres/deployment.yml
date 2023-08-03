@@ -38,4 +38,4 @@ spec:
       volumes:
         - name: pv
           persistentVolumeClaim:
-            claimName: postgres-pvc
+            claimName: postgres-bux-wallet-demo
