@@ -21,7 +21,7 @@ spec:
         - name: 4chainregistry
       containers:
         - name: bux-wallet-frontend-demo
-          image: 4chain/bux-wallet-frontend:0.18.0
+          image: 4chain/bux-wallet-frontend:0.19.0
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: env-config
