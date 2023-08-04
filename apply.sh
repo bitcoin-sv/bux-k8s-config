@@ -3,7 +3,7 @@
 # Temporary solution for applying all k8s changes (should be replaced with argo cd)
 # For now add your file to the command
 
-sudo sudo microk8s kubectl apply \
+sudo microk8s kubectl apply \
   -f ./devops/cert-manager/cluster-issuer.yml \
   -f ./devops/traefik/https-redirect.yml \
   -f ./devops/argo-cd/ingress.yml;

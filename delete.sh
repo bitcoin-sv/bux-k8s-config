@@ -27,15 +27,16 @@ sudo microk8s kubectl delete \
   -f ./apps/bux-wallet/frontend/ingress.yml \
   -f ./apps/bux-wallet/frontend/environment.yml \
   -f ./apps/bux-wallet/frontend/service.yml \
-  -f ./apps/bux-wallet/frontend/deployment.yml \
-  -f ./devops/argo-cd/repository-connector-secret.yml \
-  -f ./apps/bux-console/argocd-def.yml \
-  -f ./apps/pulse/argocd-def.yml \
-  -f ./apps/bux-server/postgres/argocd-def.yml \
-  -f ./apps/bux-server/redis/argocd-def.yml \
-  -f ./apps/bux-server/bux/development/argocd-def.yml \
-  -f ./apps/bux-wallet/postgres/argocd-def.yml \
-  -f ./apps/bux-wallet/frontend/argocd-def.yml \
-  -f ./apps/bux-wallet/backend/argocd-def.yml;
+  -f ./apps/bux-wallet/frontend/deployment.yml;
 
+sudo microk8s kubectl delete -n argocd \
+      -f ./devops/argo-cd/repository-connector-secret.yml \
+      -f ./apps/bux-console/argocd-def.yml \
+      -f ./apps/pulse/argocd-def.yml \
+      -f ./apps/bux-server/postgres/argocd-def.yml \
+      -f ./apps/bux-server/redis/argocd-def.yml \
+      -f ./apps/bux-server/bux/development/argocd-def.yml \
+      -f ./apps/bux-wallet/postgres/argocd-def.yml \
+      -f ./apps/bux-wallet/frontend/argocd-def.yml \
+      -f ./apps/bux-wallet/backend/argocd-def.yml;
 
