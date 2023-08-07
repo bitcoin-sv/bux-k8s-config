@@ -17,11 +17,9 @@ spec:
       labels:
         app: bux-wallet-frontend-demo
     spec:
-      imagePullSecrets:
-        - name: 4chainregistry
       containers:
         - name: bux-wallet-frontend-demo
-          image: 4chain/bux-wallet-frontend:0.19.1
+          image: bsvb/bux-wallet-frontend:v0.20.0
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: env-config
