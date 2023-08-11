@@ -1,7 +1,18 @@
-# k8s-config
+# bux-k8s-config
 ## What is it?
 
-It holds a configuration and scripts to setup 4chain Demo environment on the vps.
+This repo should be forked and modified to control a deployment of the BUX Reference Implementation.
+
+## Installation
+
+To install all requirements and deploy it and setup on a new environment you just need to run the following command - replacing the two variables required with your domain and host IP address.
+
+```bash
+./deploy.sh your-domain-name.com your-hosts-public-ip4-address
+```
+The script will replace the domain, ip address, and github user within the configuration files of the repo. Then it will install microk8s and configure it using those modified files.
+
+---------------------------------------------------------------------------------------
 
 ## Directory structure:
 
@@ -19,24 +30,9 @@ It holds a configuration and scripts to setup 4chain Demo environment on the vps
   ├── install_microk8s.sh   -> script that should install and prepare microk8s environment (in case if we want do an installation on clean machine)
   ├── microk8s-config.yaml  -> configuration for microk8s, used for example for enabling addons
   └── update_microk8s.sh    -> script that should update configuration of microk8s based on file microk8s-config.yaml
-```
-
-## Solution
-
-### Microk8s
+  ```
 
 ---------------------------------------------------------------------------------------
-We use microk8s as kubernetes platform.
-
-#### Installation
-
-To install all requirements and deploy it and setup on a new environment you just need to run the following command - replacing the two variables required with your domain and host IP address.
-
-```bash
-./deploy.sh your-domain-name.com your-hosts-public-ip4-address
-```
-
-The script would try to install microk8s and configure it according to specification in [microk8s-config.yaml](microk8s-config.yaml) 
 
 #### Changing setup of microk8s 
 
