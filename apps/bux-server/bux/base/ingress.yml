@@ -11,10 +11,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - bux.4chain.space
+        - bux.DOMAIN_NAME_TLD
       secretName: bux-server-tls
   rules:
-    - host: bux.4chain.space
+    - host: bux.DOMAIN_NAME_TLD
       http:
         paths:
           - path: /

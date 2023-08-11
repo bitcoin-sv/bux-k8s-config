@@ -11,7 +11,7 @@ spec:
   ingressClassName: traefik
   tls:
     - hosts:
-        - bux-console.4chain.space
+        - bux-console.DOMAIN_NAME_TLD
       secretName: bux-console-tls
   rules:
     - host: bux-console.4chain.space

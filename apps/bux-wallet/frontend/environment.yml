@@ -11,6 +11,6 @@ metadata:
 data:
   env-config.json: |
     {
-      "apiUrl": "https://bux-wallet.4chain.space",
-      "paymailDomain": "4chain.space"
+      "apiUrl": "https://bux-wallet.DOMAIN_NAME_TLD",
+      "paymailDomain": "DOMAIN_NAME_TLD"
     }

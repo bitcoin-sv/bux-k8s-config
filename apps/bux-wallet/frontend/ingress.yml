@@ -7,7 +7,7 @@ metadata:
 spec:
   tls:
     - hosts:
-        - bux-wallet.4chain.space
+        - bux-wallet.DOMAIN_NAME_TLD
       secretName: bux-wallet-tls
   rules:
     - host: bux-wallet.4chain.space
