@@ -4,11 +4,11 @@ if [ $# -lt 3 ]; then
     exit 1
 fi
 
-sh replace_domain.sh $1
+sudo sh replace_domain.sh "$1"
 echo "domain: $1"
-sh replace_host_ip.sh $2
+sudo sh replace_host_ip.sh "$2"
 echo "host ip: $2"
-sh replace_github_username.sh $3
+sudo sh replace_github_username.sh "$3"
 echo "github username: $3"
-sh install_microk8s.sh
+sudo sh install_microk8s.sh
 echo "Installation complete, please navigate to https://cd.$1 which should become availble within the next 20 minutes."

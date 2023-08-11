@@ -19,4 +19,4 @@ sudo microk8s enable metallb BUX_HOST_IP/32
 
 # apply configuration
 # ATTENTION - in case if some addons doen't load run update_microk8s.sh script again
-./update_microk8s.sh
+sudo sh update_microk8s.sh
