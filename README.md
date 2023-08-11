@@ -30,9 +30,10 @@ We use microk8s as kubernetes platform.
 
 #### Installation
 
-To install it and setup on a new environment you just need to run:
+To install all requirements and deploy it and setup on a new environment you just need to run the following command - replacing the two variables required with your domain and host IP address.
+
 ```bash
-./install_microk8s.sh
+./deploy.sh your-domain-name.com your-hosts-public-ip4-address
 ```
 
 The script would try to install microk8s and configure it according to specification in [microk8s-config.yaml](microk8s-config.yaml) 

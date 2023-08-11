@@ -8,6 +8,14 @@ sudo snap install microk8s --classic --channel=1.27/stable
 
 # enable community addons so configuration update should go smoothly
 sudo microk8s enable community
+sudo microk8s enable dns
+sudo microk8s enable dashboard
+sudo microk8s enable helm
+sudo microk8s enable helm3
+sudo microk8s enable argocd
+sudo microk8s enable cert-manager
+sudo microk8s enable openebs
+sudo microk8s enable metallb BUX_HOST_IP/32
 
 # apply configuration
 # ATTENTION - in case if some addons doen't load run update_microk8s.sh script again
