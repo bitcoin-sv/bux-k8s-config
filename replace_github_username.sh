@@ -10,7 +10,7 @@ replace_string() {
         if [ -d "$file" ]; then
             replace_string "$file"
         elif [ -f "$file" ] && [ "$file" != "./$0" ]; then
-            sed -i '' "s/GITHUB_USERNAME/$replacement/g" "$file"
+            sed -i "s/GITHUB_USERNAME/$replacement/g" "$file"
         fi
     done
 }
