@@ -9,16 +9,20 @@ This repo should be forked and modified to control a deployment of the BUX Refer
 
 2. Fork this repo to your own private one on github and note your github username.
 
-3. Set up your DNS records:
+3. Set up your DNS records:  
+
 | Hostname                          | Type | Priority | Weight | Port | Target                    |
 |-----------------------------------|------|----------|--------|------|---------------------------|
 | _bsvalias._tcp.your-domain.tld    | SRV  | 10       | 10     | 443  | bux.your-domain.tld       |
-| your-domain.tld                   | A    |          |        |      | 123.45.67.89              |
-| bux.your-domain.tld               | A    |          |        |      | 123.45.67.89              |
-| bux-console.your-domain.tld       | A    |          |        |      | 123.45.67.89              |
-| bux-wallet.your-domain.tld        | A    |          |        |      | 123.45.67.89              |
-| cd.your-domain.tld                | A    |          |        |      | 123.45.67.89              |
-| pulse.your-domain.tld             | A    |          |        |      | 123.45.67.89              |
+
+| Hostname                          | Type  | Target (replace with your host ip) |
+|-----------------------------------|-------|------------------------------------|
+| your-domain.tld                   | A     | 123.45.67.89                       |
+| bux.your-domain.tld               | A     | 123.45.67.89                       |
+| bux-console.your-domain.tld       | A     | 123.45.67.89                       |
+| bux-wallet.your-domain.tld        | A     | 123.45.67.89                       |
+| cd.your-domain.tld                | A     | 123.45.67.89                       |
+| pulse.your-domain.tld             | A     | 123.45.67.89                       |
 
 
 4. Run the following command from your VPS - replacing the three arguments required:
