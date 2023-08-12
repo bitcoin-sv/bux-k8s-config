@@ -1,4 +1,5 @@
 #!/bin/bash
+
 echo "replace_username.sh: replace all occurences of GITHUB_USERNAME with $1, except file: $0"
 
 replacement="$1"

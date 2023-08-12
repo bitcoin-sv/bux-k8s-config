@@ -27,13 +27,18 @@ pulse.your-domain.tld       A 123.45.67.89
  - your github username (whichever account you just forked the config repo to in step 1.)
 
 ```bash
-sudo sh deploy.sh your-domain-name.com your-hosts-public-ip4-address your-github-username
+sudo sh setup.sh you-domain.tld host-ip your-github-username
 ```
 > This script will replace the domain, ip address, and github user within the configuration files of the repo. Then it will install microk8s and configure it using those modified files.
 
 5. Copy the ssh key which the above script printed after "ACTION YOU MUST TAKE" - add it as the deploy key to your forked config repo from step 1. - the link should be something like: [https://github.com/YOUR_GITHUB_USERNAME/bux-k8s-config/settings/keys](https://github.com/YOUR_GITHUB_USERNAME/bux-k8s-config/settings/keys)
 
-6. Wait for about 10 minutes as your deployment brings itself up. Once ready the wallet will accept the registration of new users at your domain: `https://bux-wallet.your-domain.tld`
+6. Run the deploy script:
+```bash
+sudo sh deploy.sh
+```
+
+7. Wait for about 10 minutes as your deployment brings itself up. Once ready the wallet will accept the registration of new users at your domain: `https://bux-wallet.your-domain.tld`
 
 ---------------------------------------------------------------------------------------
 
