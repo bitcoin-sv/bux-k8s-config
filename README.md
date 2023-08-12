@@ -8,7 +8,7 @@ This repo should be forked and modified to control a deployment of the BUX Refer
 To install all requirements and deploy it and setup on a new environment you just need to run the following command - replacing the three arguments required with your domain, host IP address and your github username.
 
 ```bash
-sudo sh deploy.sh your-domain-name.com your-hosts-public-ip4-address
+sudo sh deploy.sh your-domain-name.com your-hosts-public-ip4-address your-github-username
 ```
 The script will replace the domain, ip address, and github user within the configuration files of the repo. Then it will install microk8s and configure it using those modified files.
 
