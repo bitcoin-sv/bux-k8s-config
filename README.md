@@ -5,12 +5,35 @@ This repo should be forked and modified to control a deployment of the BUX Refer
 
 ## Installation
 
-To install all requirements and deploy it and setup on a new environment you just need to run the following command - replacing the three arguments required with your domain, host IP address and your github username.
+1. Set up a VPS on [Contabo](http://contabo.net) or similar.
+
+2. Fork this repo to your own private one on github and note your github username.
+
+3. Set up your DNS records:
+```
+_bsvalias._tcp.your-domain.tld  SRV   10 10 443 bux.your-domain.tld.
+
+your-domain.tld             A 123.45.67.89
+bux.your-domain.tld	        A 123.45.67.89
+bux-console.your-domain.tld	A 123.45.67.89
+bux-wallet.your-domain.tld	A 123.45.67.89
+cd.your-domain.tld	        A 123.45.67.89
+pulse.your-domain.tld       A 123.45.67.89
+```
+
+4. Run the following command from your VPS - replacing the three arguments required:
+ - domain name (no sub domains allowed, this should be in the form: `your-domain.tld`)
+ - host IP address (IPv4 should look something like `123.45.67.89`) 
+ - your github username (whichever account you just forked the config repo to in step 1.)
 
 ```bash
 sudo sh deploy.sh your-domain-name.com your-hosts-public-ip4-address your-github-username
 ```
-The script will replace the domain, ip address, and github user within the configuration files of the repo. Then it will install microk8s and configure it using those modified files.
+> This script will replace the domain, ip address, and github user within the configuration files of the repo. Then it will install microk8s and configure it using those modified files.
+
+5. Copy the ssh key which the above script printed after "ACTION YOU MUST TAKE" - add it as the deploy key to your forked config repo from step 1. - the link should be something like: [https://github.com/YOUR_GITHUB_USERNAME/bux-k8s-config/settings/keys](https://github.com/YOUR_GITHUB_USERNAME/bux-k8s-config/settings/keys)
+
+6. Wait for about 10 minutes as your deployment brings itself up. Once ready the wallet will accept the registration of new users at your domain: `https://bux-wallet.your-domain.tld`
 
 ---------------------------------------------------------------------------------------
 
