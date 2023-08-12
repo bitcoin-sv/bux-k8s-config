@@ -14,7 +14,7 @@ spec:
         - bux-console.DOMAIN_NAME_TLD
       secretName: bux-console-tls
   rules:
-    - host: bux-console.4chain.space
+    - host: bux-console.DOMAIN_NAME_TLD
       http:
         paths:
           - path: /

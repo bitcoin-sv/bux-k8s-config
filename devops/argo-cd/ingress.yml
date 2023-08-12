@@ -11,10 +11,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - cd.4chain.space
+        - cd.DOMAIN_NAME_TLD
       secretName: argocd-secret
   rules:
-    - host: cd.4chain.space
+    - host: cd.DOMAIN_NAME_TLD
       http:
         paths:
           - path: /

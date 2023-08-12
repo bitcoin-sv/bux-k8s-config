@@ -10,7 +10,7 @@ spec:
         - bux-wallet.DOMAIN_NAME_TLD
       secretName: bux-wallet-tls
   rules:
-    - host: bux-wallet.4chain.space
+    - host: bux-wallet.DOMAIN_NAME_TLD
       http:
         paths:
           - path: /
