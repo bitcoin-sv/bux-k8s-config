@@ -11,6 +11,7 @@ echo "host ip: $2"
 sudo sh replace_github_username.sh "$3"
 echo "github username: $3"
 
+sudo apt install -y open-iscsi
 sudo sh install_microk8s.sh
 echo "microk8s installed"
 
