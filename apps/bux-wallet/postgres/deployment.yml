@@ -34,7 +34,7 @@ spec:
                 name: postgres-bux-wallet-demo
           volumeMounts:
             - name: pv
-              mountPath: /var/postgresql/data
+              mountPath: /var/lib/postgresql/data
       volumes:
         - name: pv
           persistentVolumeClaim:
