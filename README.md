@@ -420,7 +420,7 @@ Then, we use defined claim&volume in deployment file this way:
 #...
           volumeMounts:
             - name: pv
-              mountPath: /var/postgresql/data
+              mountPath: /var/lib/postgresql/data
       volumes:
         - name: pv
           persistentVolumeClaim:
