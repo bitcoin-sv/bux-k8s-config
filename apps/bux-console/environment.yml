@@ -5,5 +5,9 @@ metadata:
   labels:
     app: bux-console
 data:
-  ROOT_URL: 'https://bux-console.DOMAIN_NAME_TLD/'
-  METEOR_SETTINGS: '{}'
+  env-config.json: |
+    {
+      "serverUrl": "https://bux.DOMAIN_NAME_TLD",
+      "hideServerUrl": false
+    }
+    
