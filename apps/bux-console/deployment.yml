@@ -22,12 +22,18 @@ spec:
     spec:
       containers:
         - name: bux-console
-          image: 4chainstudio/bux-console:v0.2.0-RC1
-          imagePullPolicy: IfNotPresent
-          envFrom:
-            - configMapRef:
-                name: bux-console-env
+          image: buxorg/bux-console:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: env-config
+              mountPath: /usr/share/nginx/html/env-config.json
+              subPath: env-config.json
+              readOnly: true
           ports:
             - containerPort: 3000
               name: web
               protocol: TCP
+      volumes:
+        - name: env-config
+          configMap:
+            name: bux-console-env
