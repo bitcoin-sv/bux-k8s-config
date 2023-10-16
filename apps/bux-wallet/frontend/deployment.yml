@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: bux-wallet-frontend-demo
-          image: bsvb/bux-wallet-frontend:v0.24.0
+          image: bsvb/bux-wallet-frontend:v0.24.2
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: env-config
