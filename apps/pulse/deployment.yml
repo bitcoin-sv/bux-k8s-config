@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: pulse
-          image: libsv/pulse:v0.2.0
+          image: libsv/pulse:v0.2.1
           args:
             - --preloaded
           imagePullPolicy: IfNotPresent
