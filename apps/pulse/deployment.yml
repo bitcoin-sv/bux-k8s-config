@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: pulse
-          image: bsvb/pulse:v0.3.0
+          image: bsvb/pulse:v0.5.1
           args:
             - --preloaded
           imagePullPolicy: IfNotPresent
