@@ -44,7 +44,7 @@
     "auth_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzaWdnaSIsImV4cCI6MTc1MDM4MTA2OH0.EXHm4MrwnJGjHIrdSUP39TyQZsieukWivCwqecQO0F8",
     "bux_agent_url": "wss://siggi.siftbitcoin.com/websocket",
     "debug": true,
-    "enabled": true,
+    "enabled": false,
     "false_positive_rate": 0.01,
     "load_monitored_destinations": true,
     "max_number_of_destinations": 100000,
