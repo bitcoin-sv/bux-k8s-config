@@ -12,5 +12,6 @@ data:
   env-config.json: |
     {
       "apiUrl": "https://bux-wallet.DOMAIN_NAME_TLD",
+      "wsUrl": "wss://bux-wallet.DOMAIN_NAME_TLD/api/websocket",
       "paymailDomain": "DOMAIN_NAME_TLD"
     }
