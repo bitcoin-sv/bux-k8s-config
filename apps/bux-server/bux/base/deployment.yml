@@ -31,30 +31,35 @@ spec:
             name: bux-server-env-configs
       containers:
         - name: bux-server
-          image: 4chainstudio/bux-server:v0.5.16
+          image: buxorg/bux-server-unstable:v0.11.0
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
                 name: bux-server-env
           env:
-            - name: BUX_SQL__USER
+            - name: BUX_DB_SQL_USER
               valueFrom:
                 configMapKeyRef:
                   name: postgres-configuration
                   key: POSTGRES_USER
-            - name: BUX_SQL__PASSWORD
+            - name: BUX_DB_SQL_PASSWORD
               valueFrom:
                 configMapKeyRef:
                   name: postgres-configuration
                   key: POSTGRES_PASSWORD
-            - name: BUX_SQL__NAME
+            - name: BUX_DB_SQL_NAME
               valueFrom:
                 configMapKeyRef:
                   name: postgres-configuration
                   key: POSTGRES_DB
+            - name: BUX_PAYMAIL_BEEF_PULSE_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: pulse-configuration
+                  key: PULSE_HTTP_AUTH_TOKEN
           volumeMounts:
             - name: config-volume
-              mountPath: /config/envs
+              mountPath: /config
           ports:
             - containerPort: 3003
               name: web

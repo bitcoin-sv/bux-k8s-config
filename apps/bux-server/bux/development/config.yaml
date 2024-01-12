@@ -1,0 +1,65 @@
+auth:
+  admin_key: 'xpub661MyMwAqRbcFgfmdkPgE2m5UjHXu9dj124DbaGLSjaqVESTWfCD4VuNmEbVPkbYLCkykwVZvmA8Pbf8884TQr1FgdG2nPoHR8aB36YdDQh'
+  require_signing: false
+  scheme: xpub
+  signing_disabled: true
+cache:
+  cluster:
+    coordinator: memory
+    prefix: bux_cluster_
+    redis: null
+  engine: redis
+  redis:
+    dependency_mode: true
+    max_active_connections: 0
+    max_connection_lifetime: 1m0s
+    max_idle_connections: 10
+    max_idle_timeout: 10s
+    url: redis://redis-service:6379
+    use_tls: false
+db:
+  datastore:
+    debug: false
+    engine: postgresql
+    table_prefix: xapi
+  sql:
+    debug: false
+    driver: postgresql
+    host: postgres-service
+    max_connection_idle_time: 0s
+    max_connection_time: 0s
+    max_idle_connections: 0
+    max_open_connections: 0
+    name: xapi
+    password: ""
+    port: "5432"
+    replica: false
+    skip_initialize_with_version: true
+    table_prefix: "xapi"
+    time_zone: UTC
+    tx_timeout: 10s
+    user: postgres
+debug: true
+debug_profiling: true
+nodes:
+  protocol: arc
+paymail:
+  beef:
+    pulse_auth_token: auth_token
+    pulse_url: https://pulse/api/v1/chain/merkleroot/verify
+    use_beef: true
+  default_from_paymail: 'bux@DOMAIN_NAME_TLD'
+  default_note: bux Address Resolution
+  domain_validation_enabled: false
+  domains:
+    - 'DOMAIN_NAME_TLD'
+  enabled: true
+  sender_validation_enabled: false
+request_logging: true
+server_config:
+  idle_timeout: 1m0s
+  port: 3003
+  read_timeout: 40s
+  write_timeout: 40s
+task_manager:
+  factory: memory

@@ -6,4 +6,4 @@ metadata:
     app: bux
     instance: bux-server
 data:
-  BUX_ENVIRONMENT: 'development'
+  BUX_CONFIG_FILE: '/config/config.yaml'
